@@ -257,8 +257,363 @@ import sys
     bar = (0, )
     ```
 
-3. 
+3. В срезах (поскольку : ведет себя как бинарный оператор):
+
+    ```python
+    # Correct:
+    ham[1:9], ham[1:9:3], ham[:9:3], ham[1::3], ham[1:9:]
+    ham[lower:upper], ham[lower:upper:], ham[lower::step]
+    ham[lower+offset : upper+offset]
+    ham[: upper_fn(x) : step_fn(x)], ham[:: step_fn(x)]
+    ham[lower + offset : upper + offset]
+    # Wrong:
+    ham[lower + offset:upper + offset]
+    ham[1: 9], ham[1 :9], ham[1:9 :3]
+    ham[lower : : step]
+    ham[ : upper]
+    ```
+
+4. При вызове функции:
+
+    ```python
+    # Correct:
+    spam(1)
+
+    # Wrong:
+    spam (1)
+    ```
+
+5. При индексации и срезе перед открывающей скобкой:
+
+    ```python
+    # Correct:
+    dct['key'] = lst[index]
+
+    # Wrong:
+    dct ['key'] = lst [index]
+    ```
+
+6. При операции присваивания:
+
+    ```python
+    # Correct:
+    x = 1
+    y = 2
+    long_variable = 3
+
+    # Wrong:
+    x             = 1
+    y             = 2
+    long_variable = 3
+    ```
+
+Также рекомендуется окамлять пробелами составные операторы (```+=, -=```, и т.д.), булевы операторы (```and, not, or, not``` и их комбинации), сравнения (```==, <>, !=``` и т.д.).
+
+Пробелы также рекомендуется добавлять между операторами с разными приоритетами выполнения:
+
+```python
+# Correct:
+i = i + 1
+submitted += 1
+x = x*2 - 1
+hypot2 = x*x + y*y
+c = (a+b) * (a-b)
+
+# Wrong:
+i=i+1
+submitted +=1
+x = x * 2 - 1
+hypot2 = x * x + y * y
+c = (a + b) * (a - b)
+```
+
+В аннотациях функции должны использоваться обычные правила для двоеточий и иметь пробелы следующим образом:
+
+```python
+# Correct:
+def munge(input: AnyStr): ...
+def munge() -> PosInt: ...
+
+# Wrong:
+def munge(input:AnyStr): ...
+def munge()->PosInt: ...
+```
+
+При использовании = для указания аргумента ключевого слова в вызове функции не используйте пробелы:
+
+```python
+# Correct:
+def complex(real, imag=0.0):
+    return magic(r=real, i=imag)
+
+# Wrong:
+def complex(real, imag = 0.0):
+    return magic(r = real, i = imag)
+```
+
+### Соглашение по именованиям
+
+Имена, которые следует избегать:
+
+1. Односимвольные имена (кроме счетчиков или итераторов). **Никогда** не используйте строчную `l`, заглавную `O` и `I` как имена переменных, так как в некоторых шрифтах они практически неотличимы от нуля или единицы.
+2. Дефисы в именах модулей и пакетов.
+3. Двойные подчеркивания (в начале и конце имен, например, `__all__`) не для специальных переменных и\или функций.
+
+Правила именования:
+
++ Для функций и переменных - **snake_case** (слова из маленьких букв с разделяющими подчеркиваниями, например, `my_variable`)
++ Для констант - имена только из заглавных букв с разделителем в виде нижнего подчеркивания (например, `MAX_OVERFLOW`)
++ Имена классов - **CamelCase** с заглавным символом в начале.
+
+### Общие рекомендации
+
++ Для конкатенации строк рекомендуется использовать `''.join(...)` из-за особенностей реализации строк и их конкатенации.
++ Сравнение объектов-синглтонов (присутствующих в глобальном пространстве имен только один раз), например, `None`, должно всегда выполняться через `is` или `is not` и никогда через `==`.
++ Используйте в булевых выражениях следующий формат (пока позволяет логика и смысл булевого выражения):
+  
+  ```python
+  # Correct:
+    if foo is not None:
+        
+    # Wrong:
+    if not foo is None:
+  ```
+
++ При реализации упорядочивания и сравнения рекомендуется имплементировать все 6 операций сравнения: `__eq__, __ne__, __lt__, __le__, __gt__, __ge__`, которые являются методами, перегружающие операторы `==, !=, <, <=, >, >=` соответственно. При реализации важно учитывать **рефлексивность операций** (например, если x > y истинно, то y < x тоже должно быть истинно).
++ Всегда используйте вместо `lambda` оператор `def` для функций, которые определяются для использования дальше по коду, так как при отладке в таком случае предоставляется более понятная и читабельная информация.
++ При отлавливании исключений указывайте в блоке `except` имена всех возможных исключений вместо "голого" `except` для более понятной отладки. Единственные два исключения: логгирование (например, для HTTP запросов иногда такое может иметь место) и выполнение некоторой работе по закрытию/очистке ресурсов (вместе с конструкцией try...finally) с передачей исключения вверх по стеку вызовов.
++ Ограничивайте максимальным образом блоки `try/except`, например:
+
+    ```python
+    # Correct:
+    try:
+        value = collection[key]
+    except KeyError:
+        return key_not_found(key)
+    else:
+        return handle_value(value)
+
+    # Wrong:
+    try:
+        # Too broad!
+        return handle_value(collection[key])
+    except KeyError:
+        # Will also catch KeyError raised by handle_value()
+        return key_not_found(key)
+    ```
+
++ Когда требуется подключение какого-либо ресурса локально, используйте менеджер контекста `with` или, если первое невозможно, блок `try...finally`.
++ Внутри блока `with` менеджеры контекста должны вызываться через раздельные функции или методы всегда, когда они что-то делают, кроме ситуаций захвата и высвобождения ресурса:
+
+    ```python
+    # Correct:
+    with conn.begin_transaction():
+        do_stuff_in_transaction(conn)
+
+    # Wrong:
+    with conn:
+        do_stuff_in_transaction(conn)
+    ```
+
++ Прописывайте все конструкции ``return``, где по логике кода функция должна **явно** возвращать значение:
+
+    ```python
+    # Correct:
+
+    def foo(x):
+        if x >= 0:
+            return math.sqrt(x)
+        else:
+            return None
+
+    def bar(x):
+        if x < 0:
+            return None
+        return math.sqrt(x)
+
+    # Wrong:
+
+    def foo(x):
+        if x >= 0:
+            return math.sqrt(x)
+
+    def bar(x):
+        if x < 0:
+            return
+        return math.sqrt(x)
+    ```
+
++ Не сравнивайте булевские значения с True|False используя `==` или `is`:
+
+    ```python
+    # Correct:
+    if greeting:
+
+    # Wrong:
+    if greeting == True:
+
+    # Wrong:
+    if greeting is True:
+    ```
 
 ## Документация кода
 
+### Комментарии
+
+Комментарии должны быть законченными предложениями и начинаться с заглавной буквы. Также они должны находиться на том же отступе, что и код, к которому комментарий написан, и **перед** самим кодом, а не на той же строке.
+
+Комментарии, которые противоречат коду, хуже, чем их полное отсутствие. Старайтесь держать комментарии актуальными при изменении кода. Помимо этого, комментарии должны не быть тривиальными, а должны пояснять суть работы кода или задумки программиста.
+
+### Docstrings
+
+**Docstring** - строка, возникающая как первое выражение в модуле, функции, классе или методе и являющаяся (чаще всего) документацией для описываемого кода. Такие строки доступны через атрибут `__doc__` объекта.
+
+Все модули должны иметь docstrings, и все функции, классы и публичные методы, экспортируемые модулем также должны иметь строки документации. Пакеты могут быть задокументированными через docstring, лежащий в `__init__.py`.
+
+Выглядят docstrings следующим образом:
+
+```python
+def kos_root():
+    """Return the pathname of the KOS root directory."""
+    global _kos_root
+    if _kos_root: return _kos_root
+    ...
+
+def complex(real=0.0, imag=0.0):
+    """Form a complex number.
+
+    Keyword arguments:
+    real -- the real part (default 0.0)
+    imag -- the imaginary part (default 0.0)
+    """
+    if imag == 0.0 and real == 0.0:
+        return complex_zero
+    ...
+```
+
+Рекомендации по использованию docstring:
+
+1. Для таких строк используются тройные двойные кавычки `"""`;
+2. В docstrings нельзя указывать сигнатуру функции/метода. Вместо этого опишите что делает функция словами. Для описания сигнатуры есть аннотации, рассматриваемые далее.
+
+### Аннотации
+
+**Аннотации** в Python - метаданные, которые говорят о типах данных, принимаемых в качестве аргументов и возвращаемых как результат выполнения кода.
+
+Синтаксис аннотаций выглядит следующим образом:
+
+```python
+def greeting(name: str) -> str:
+    return 'Hello ' + name
+```
+
+Аннотации поддерживают объединение типов, псевдонимы через модуль `typing`, а с недавних пор еще и указание типа-дженерика, позволяя описывать функциональность для любого типа с сохранением логической связи в метаданных для большей удобочитаемости. Например:
+
+```python
+from typing import Generic, TypeVar
+T = TypeVar('T')
+
+class Box(Generic[T]):
+    def __init__(self, content):
+        self.content: T = content
+```
+
+После выхода Python 3.12 дженерики теперь не требуют модуль `typing` и выглядят следующим образом:
+
+```python
+from collections import deque
+
+class Queue[T]:
+    def __init__(self) -> None:
+        self.elements: deque[T] = deque()
+
+    def push(self, element: T) -> None:
+        self.elements.append(element)
+
+    def pop(self) -> T:
+        return self.elements.popleft()
+```
+
+Важно: несмотря на то, что аннотации доступны в процессе выполнения через атрибут `__annotations__`, **никакой проверки типов в процессе выполнения не происходит**. Ключевая идея использования аннотаций - дать пользователю и/или программисту информацию о том, что разработчиком полагается как аргументы функции или метода, а также что должно вернуться в результате (или должно ли вернуться что-то вообще). Также этот инструмент позволяет использовать специальные утилиты - **статические линтеры** - для проверки типов **отдельно от выполнения программы**. Наиболее популярным линтером для Python является [mypy](https://mypy-lang.org/).
+
+Помимо того, в Python позволяется аннотировать переменные, к примеру:
+
+```python
+# Tuple packing with variable annotation syntax
+t: Tuple[int, ...] = (1, 2, 3)
+# or
+t: Tuple[int, ...] = 1, 2, 3  # This only works in Python 3.8+
+
+# Tuple unpacking with variable annotation syntax
+header: str
+kind: int
+body: Optional[List[str]]
+header, kind, body = message
+```
+
+Однако, при аннотации переменных они не инициализуруются, из-за чего следующий код не запустится и выдаст ошибку:
+
+```python
+a: int
+print(a)  # raises NameError
+```
+
+Или:
+
+```python
+def f():
+    a: int
+    print(a)  # raises UnboundLocalError
+    # Commenting out the a: int makes it a NameError.
+```
+
 ## Задание
+
+Представлены 5 кусков кода:
+
+```python
+# 1st: function
+def outer(a,b):
+ def inner(x):
+  return x*x
+ result = inner(a) + inner(b)
+ return result
+
+# 2nd: function
+def processData(d1,d2,d3):
+    """Функция обрабатывает три значения"""
+    avg=(d1+d2+d3)/3
+    return avg
+
+# 3rd: class
+class calculator:
+ def __init__(self,a,b):
+  self.a=a
+  self.b=b
+ def add(self):
+  return self.a+self.b
+ def subtract(self):
+  return self.a-self.b
+
+# 4th: function
+def sumList(lst):
+  """считает сумму списка"""
+  s=0
+  for i in lst: s+=i
+  return s
+
+# 5th: class
+class bankaccount:
+  def __init__(self,owner,balance=0):
+    self.owner=owner
+    self.balance=balance
+  def deposit(self,amount):
+    self.balance+=amount
+  def withdraw(self,amount):
+    if amount<=self.balance:
+      self.balance-=amount
+    else:
+      print("Недостаточно средств")
+```
+
+Задание: исправить код, приведя и задокументируяего по правилам Python.
