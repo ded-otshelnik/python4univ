@@ -1,6 +1,8 @@
 import unittest
 import sample
 
+# Unittest test cases
+
 
 class TestSample(unittest.TestCase):
     def __init__(self, methodName="runTest"):
@@ -64,6 +66,65 @@ class TestSample(unittest.TestCase):
         # Negative test case for zero division
         with self.assertRaises(ValueError):
             self.checker.div(self.a1, self.b2)
+
+
+# Pytest test cases
+
+
+def test_pytest_sum():
+    # Arrange
+    checker = sample.Operation()
+    a = 10
+    b = 20
+    expected = 30
+
+    # Act
+    result = checker.add(a, b)
+
+    # Assert
+    assert result == expected, f"Expected {expected}, but got {result}"
+
+
+def test_pytest_minus():
+    # Arrange
+    checker = sample.Operation()
+    a = 20
+    b = 10
+    expected = 10
+
+    # Act
+    result = checker.minus(a, b)
+
+    # Assert
+    assert result == expected, f"Expected {expected}, but got {result}"
+
+
+def test_pytest_mul():
+    # Arrange
+    checker = sample.Operation()
+    a = 10
+    b = 20
+    expected = 200
+
+    # Act
+    result = checker.mul(a, b)
+
+    # Assert
+    assert result == expected, f"Expected {expected}, but got {result}"
+
+
+def test_pytest_div():
+    # Arrange
+    checker = sample.Operation()
+    a = 10
+    b = 20
+    expected = 200
+
+    # Act
+    result = checker.mul(a, b)
+
+    # Assert
+    assert result == expected, f"Expected {expected}, but got {result}"
 
 
 if __name__ == "__main__":

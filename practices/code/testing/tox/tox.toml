@@ -22,4 +22,5 @@ commands = [["black", { replace = "posargs", default = ["."], extend = true} ]]
 [env.type]
 description = "run type checks"
 deps = ["mypy"]
-commands = [["mypy", { replace = "posargs", default = ["."], extend = true} ]]
+commands = [["mypy", { replace = "posargs", default = [".", 
+                                                       "--ignore-missing-imports"], extend = true} ]]

@@ -1,0 +1,72 @@
+lint: find interpreter for spec PythonSpec(path=/home/andrey-win/anaconda3/envs/pharm_db/bin/python)
+lint: proposed PythonInfo(spec=CPython3.12.9.final.0-64, exe=/home/andrey-win/anaconda3/envs/pharm_db/bin/python, platform=linux, version='3.12.9 | packaged by Anaconda, Inc. | (main, Feb  6 2025, 18:56:27) [GCC 11.2.0]', encoding_fs_io=utf-8-utf-8)
+lint: commands[0]> black .
+lint: exit 0 (0.10 seconds) /home/andrey-win/python4univ/practices/code/testing/tox> black . pid=35781
+lint: OK ✔ in 0.12 seconds
+type: find interpreter for spec PythonSpec(path=/home/andrey-win/anaconda3/envs/pharm_db/bin/python)
+type: proposed PythonInfo(spec=CPython3.12.9.final.0-64, exe=/home/andrey-win/anaconda3/envs/pharm_db/bin/python, platform=linux, version='3.12.9 | packaged by Anaconda, Inc. | (main, Feb  6 2025, 18:56:27) [GCC 11.2.0]', encoding_fs_io=utf-8-utf-8)
+type: commands[0]> mypy . --ignore-missing-imports
+Success: no issues found in 2 source files
+type: exit 0 (0.08 seconds) /home/andrey-win/python4univ/practices/code/testing/tox> mypy . --ignore-missing-imports pid=35787
+type: OK ✔ in 0.08 seconds
+3.13: find interpreter for spec PythonSpec(major=3, minor=13, free_threaded=False)
+3.13: proposed PythonInfo(spec=CPython3.12.9.final.0-64, exe=/home/andrey-win/anaconda3/envs/pharm_db/bin/python, platform=linux, version='3.12.9 | packaged by Anaconda, Inc. | (main, Feb  6 2025, 18:56:27) [GCC 11.2.0]', encoding_fs_io=utf-8-utf-8)
+3.13: proposed PathPythonInfo(spec=CPython3.12.9.final.0-64, exe=/home/andrey-win/anaconda3/envs/pharm_db/bin/python3, platform=linux, version='3.12.9 | packaged by Anaconda, Inc. | (main, Feb  6 2025, 18:56:27) [GCC 11.2.0]', encoding_fs_io=utf-8-utf-8)
+3.13: proposed PathPythonInfo(spec=CPython3.10.12.final.0-64, exe=/usr/bin/python3, platform=linux, version='3.10.12 (main, Feb  4 2025, 14:57:36) [GCC 11.4.0]', encoding_fs_io=utf-8-utf-8)
+3.13: proposed PathPythonInfo(spec=CPython3.10.12.final.0-64, exe=/bin/python3, platform=linux, version='3.10.12 (main, Feb  4 2025, 14:57:36) [GCC 11.4.0]', encoding_fs_io=utf-8-utf-8)
+3.13: skipped because could not find python interpreter with spec(s): 3.13
+3.13: SKIP ⚠ in 0.21 seconds
+3.12: find interpreter for spec PythonSpec(major=3, minor=12, free_threaded=False)
+3.12: proposed PythonInfo(spec=CPython3.12.9.final.0-64, exe=/home/andrey-win/anaconda3/envs/pharm_db/bin/python, platform=linux, version='3.12.9 | packaged by Anaconda, Inc. | (main, Feb  6 2025, 18:56:27) [GCC 11.2.0]', encoding_fs_io=utf-8-utf-8)
+3.12: commands[0]> pytest test.py --cov-branch --cov-report=term-missing --cov=sample
+============================= test session starts ==============================
+platform linux -- Python 3.12.9, pytest-8.3.5, pluggy-1.5.0
+cachedir: .tox/3.12/.pytest_cache
+rootdir: /home/andrey-win/python4univ/practices/code/testing/tox
+plugins: sugar-1.0.0, cov-6.0.0
+collected 8 items
+
+test.py ........                                                         [100%]
+
+---------- coverage: platform linux, python 3.12.9-final-0 -----------
+Name        Stmts   Miss Branch BrPart  Cover   Missing
+-------------------------------------------------------
+sample.py      29      4     18      4    83%   11, 19, 27, 34
+-------------------------------------------------------
+TOTAL          29      4     18      4    83%
+
+
+============================== 8 passed in 0.03s ===============================
+3.12: exit 0 (0.19 seconds) /home/andrey-win/python4univ/practices/code/testing/tox> pytest test.py --cov-branch --cov-report=term-missing --cov=sample pid=35794
+3.12: OK ✔ in 0.2 seconds
+3.11: find interpreter for spec PythonSpec(major=3, minor=11, free_threaded=False)
+3.11: proposed PythonInfo(spec=CPython3.12.9.final.0-64, exe=/home/andrey-win/anaconda3/envs/pharm_db/bin/python, platform=linux, version='3.12.9 | packaged by Anaconda, Inc. | (main, Feb  6 2025, 18:56:27) [GCC 11.2.0]', encoding_fs_io=utf-8-utf-8)
+3.11: proposed PathPythonInfo(spec=CPython3.12.9.final.0-64, exe=/home/andrey-win/anaconda3/envs/pharm_db/bin/python3, platform=linux, version='3.12.9 | packaged by Anaconda, Inc. | (main, Feb  6 2025, 18:56:27) [GCC 11.2.0]', encoding_fs_io=utf-8-utf-8)
+3.11: proposed PathPythonInfo(spec=CPython3.10.12.final.0-64, exe=/usr/bin/python3, platform=linux, version='3.10.12 (main, Feb  4 2025, 14:57:36) [GCC 11.4.0]', encoding_fs_io=utf-8-utf-8)
+3.11: proposed PathPythonInfo(spec=CPython3.11.11.final.0-64, exe=/usr/bin/python3.11, platform=linux, version='3.11.11 (main, Dec  4 2024, 08:55:07) [GCC 11.4.0]', encoding_fs_io=utf-8-utf-8)
+3.11: commands[0]> pytest test.py --cov-branch --cov-report=term-missing --cov=sample
+============================= test session starts ==============================
+platform linux -- Python 3.11.11, pytest-8.3.5, pluggy-1.5.0
+cachedir: .tox/3.11/.pytest_cache
+rootdir: /home/andrey-win/python4univ/practices/code/testing/tox
+plugins: sugar-1.0.0, cov-6.0.0
+collected 8 items
+
+test.py ........                                                         [100%]
+
+---------- coverage: platform linux, python 3.11.11-final-0 ----------
+Name        Stmts   Miss Branch BrPart  Cover   Missing
+-------------------------------------------------------
+sample.py      29      4     18      4    83%   11, 19, 27, 34
+-------------------------------------------------------
+TOTAL          29      4     18      4    83%
+
+
+============================== 8 passed in 0.02s ===============================
+3.11: exit 0 (0.16 seconds) /home/andrey-win/python4univ/practices/code/testing/tox> pytest test.py --cov-branch --cov-report=term-missing --cov=sample pid=35811
+  lint: OK (0.12=setup[0.02]+cmd[0.10] seconds)
+  type: OK (0.08=setup[0.00]+cmd[0.08] seconds)
+  3.13: SKIP (0.21 seconds)
+  3.12: OK (0.20=setup[0.00]+cmd[0.19] seconds)
+  3.11: OK (0.17=setup[0.01]+cmd[0.16] seconds)
+  congratulations :) (0.81 seconds)

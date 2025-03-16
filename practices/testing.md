@@ -554,15 +554,7 @@ $$ \text{Branch coverage} = \frac{1}{2} = 50 \% $$
 
 В Python с метриками покрытия можно работать двумя путями:
 
-1. **[pytest-cov](https://pytest-cov.readthedocs.io/en/latest/index.html)** - плагин, расширяющий функционал pytest; фичи пакета активируются как параметры команды `pytest`, например:
-
-    ```bash
-    pytest --cov=sample --cov-report=term-missing --cov-branch test.py
-    ```
-
-    где *sample* - тестируемый модуль (или пакет), --cov-branch - включение метрики branch coverage, --cov-report=term-missing отслеживает выключенные тесты, и т.д.
-
-2. **[coverage](https://coverage.readthedocs.io/en/7.6.12/)** - инструмент для измерения покрытия, который позволяет работать как с unittest\pytest, так и с более экзотическими фреймворками. Запускается coverage следующим образом:
+1. **[coverage](https://coverage.readthedocs.io/en/7.6.12/)** - инструмент для измерения покрытия, который позволяет работать как с unittest\pytest, так и с более экзотическими фреймворками. Запускается coverage следующим образом:
 
     ```bash
     coverage run -m unittest ...
@@ -577,6 +569,14 @@ $$ \text{Branch coverage} = \frac{1}{2} = 50 \% $$
     coverage xml
     ...
     ```
+
+2. **[pytest-cov](https://pytest-cov.readthedocs.io/en/latest/index.html)** - плагин, расширяющий функционал pytest (интегрирует coverage в утилиту); фичи пакета активируются как параметры команды `pytest`, например:
+
+    ```bash
+    pytest --cov=sample --cov-report=term-missing --cov-branch test.py
+    ```
+
+    где *sample* - тестируемый модуль (или пакет), --cov-branch - включение метрики branch coverage, --cov-report=term-missing отслеживает выключенные тесты, и т.д.
 
 ## Линтеры
 
