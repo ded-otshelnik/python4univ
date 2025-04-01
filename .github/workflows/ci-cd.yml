@@ -27,7 +27,7 @@ jobs:
       run: poetry install
 
     - name: Test with pytest
-      run: poetry run pytest tests/ --cov=pycounts --cov-report=xml
+      run: poetry run pytest tests/ --cov=package_demo --cov-branch --cov-report=xml:coverage.xml -v
 
     - name: Use Codecov to track coverage
       uses: codecov/codecov-action@v2
@@ -51,7 +51,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./code/package-demo
+        working-directory: code/package-demo
 
     # Define job steps
     steps:
@@ -82,5 +82,4 @@ jobs:
       run: |
               pip install \
               --index-url https://test.pypi.org/simple/ \
-              --extra-index-url https://pypi.org/simple \
               package-demo
