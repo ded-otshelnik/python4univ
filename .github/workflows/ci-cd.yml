@@ -1,14 +1,15 @@
 name: ci-cd
 
 on: [push, pull_request]
+defaults:
+  run:
+    working-directory: code/package-demo
 
 jobs:
   ci:
     # Set up operating system
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: code/package-demo
+    
 
     # Define job steps
     steps:
@@ -24,7 +25,9 @@ jobs:
       uses: snok/install-poetry@v1
 
     - name: Install package
-      run: poetry install
+      run: |
+        ls -la
+        poetry install
 
     - name: Test with pytest
       run: poetry run pytest tests/ --cov=package_demo --cov-branch --cov-report=xml:coverage.xml -v
@@ -49,9 +52,6 @@ jobs:
 
     # Set up operating system
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: code/package-demo
 
     # Define job steps
     steps:
