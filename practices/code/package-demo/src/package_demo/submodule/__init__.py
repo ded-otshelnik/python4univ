@@ -1,0 +1,1 @@
+from .moduleB import get_random_number

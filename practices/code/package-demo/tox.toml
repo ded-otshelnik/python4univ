@@ -1,0 +1,24 @@
+requires = ["tox>=4"]
+env_list = ["lint", "type", "3.12"]
+
+[env_run_base]
+description = "run unit tests"
+deps = [
+    "pytest>=8",
+    "pytest-sugar",
+    "pytest-cov"
+]
+commands = [["pytest", { replace = "posargs", default = ["tests/",
+                                                        "{tty:--color=yes}",
+                                                        "--cov-report=term-missing",
+                                                        "--cov-branch",
+                                                        "--cov=package_demo",
+                                                        "--verbose"
+                                                        ], extend = true }]]
+
+[env.type]
+description = "run type checks"
+deps = ["mypy"]
+commands = [["mypy", { replace = "posargs", default = [".",
+                                                       "--exclude", "tests",
+                                                       "--ignore-missing-imports"], extend = true} ]]
