@@ -11,6 +11,7 @@ deps = [
 commands = [["pytest", { replace = "posargs", default = ["tests/",
                                                         "{tty:--color=yes}",
                                                         "--cov-report=term-missing",
+                                                        "--cov-report=xml",
                                                         "--cov-branch",
                                                         "--cov=package_demo",
                                                         "--verbose"
@@ -21,4 +22,5 @@ description = "run type checks"
 deps = ["mypy"]
 commands = [["mypy", { replace = "posargs", default = [".",
                                                        "--exclude", "tests",
+                                                       "--exclude", "docs",
                                                        "--ignore-missing-imports"], extend = true} ]]
