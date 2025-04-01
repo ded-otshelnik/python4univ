@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./code/package-demo
+        working-directory: code/package-demo
 
     # Define job steps
     steps:
