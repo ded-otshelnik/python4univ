@@ -41,7 +41,7 @@ jobs:
 
     - name: Run tests
       run: |
-        poetry run tox run --parallel all
+        poetry run tox run --verbose
 
     - name: Build documentation
       run: poetry run make html --directory docs/
