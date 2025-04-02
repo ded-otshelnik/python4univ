@@ -35,12 +35,13 @@ jobs:
     - name: Install poetry
       uses: snok/install-poetry@v1.4
 
-    - name: Install package
+    - name: Install package and its dependencies
       run: |
-        poetry install
+        poetry install --no-interaction --no-root
 
-    - name: Test with tox
-      run: poetry run tox run --parallel all
+    - name: Run tests
+      run: |
+        poetry run tox run --parallel all
 
     - name: Build documentation
       run: poetry run make html --directory docs/
