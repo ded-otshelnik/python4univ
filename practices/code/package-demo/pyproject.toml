@@ -8,7 +8,6 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "tox"
 ]
 
 [build-system]

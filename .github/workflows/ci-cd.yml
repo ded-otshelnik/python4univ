@@ -38,13 +38,13 @@ jobs:
     - name: Install package and its dependencies
       run: |
         poetry install --no-interaction --no-root
+       
 
     - name: Run tests
       run: |
+        poetry run pip install -r requirements-test.txt
         poetry run tox run --verbose
 
-    - name: Build documentation
-      run: poetry run make html --directory docs/
   cd:
     permissions:
       id-token: write
