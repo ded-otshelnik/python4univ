@@ -10,6 +10,14 @@ requires-python = ">=3.12"
 dependencies = [
 ]
 
+[project.optional-dependencies]
+test = [
+    "tox",
+    "pytest",
+    "pytest-cov",
+    "pytest-sugar"
+]
+
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
