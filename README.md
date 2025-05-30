@@ -12,5 +12,7 @@
   - [Задание 2](practices/testing.md)
   - [Задание 3](practices/oop_patterns.md)
   - [Задание 4](practices/clean_code.md)
+  - [Задание 5](practices/web.md)
+  - [Задание 6](practices/Python_and_CUDA.ipynb)
 - Практические занятия:
   - [Пакеты](practices/packages.md)
